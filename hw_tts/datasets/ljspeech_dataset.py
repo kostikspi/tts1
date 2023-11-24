@@ -20,10 +20,12 @@ URL_LINKS = {
 
 class LJspeechDataset(BaseDataset):
     def __init__(self, part, data_dir=None, index_dir=None, *args, **kwargs):
-        self._index_dir = index_dir
         if data_dir is None:
             data_dir = ROOT_PATH / "data" / "datasets" / "ljspeech"
             data_dir.mkdir(exist_ok=True, parents=True)
+        if index_dir is None:
+            index_dir = data_dir
+        self._index_dir = Path(index_dir)
         self._data_dir = data_dir
         index = self._get_or_load_index(part)
 
