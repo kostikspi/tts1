@@ -19,7 +19,8 @@ URL_LINKS = {
 
 
 class LJspeechDataset(BaseDataset):
-    def __init__(self, part, data_dir=None, *args, **kwargs):
+    def __init__(self, part, data_dir=None, index_dir=None, *args, **kwargs):
+        self._index_dir = None
         if data_dir is None:
             data_dir = ROOT_PATH / "data" / "datasets" / "ljspeech"
             data_dir.mkdir(exist_ok=True, parents=True)
@@ -40,18 +41,18 @@ class LJspeechDataset(BaseDataset):
 
         files = [file_name for file_name in (self._data_dir / "wavs").iterdir()]
         train_length = int(0.85 * len(files)) # hand split, test ~ 15% 
-        (self._data_dir / "train").mkdir(exist_ok=True, parents=True)
-        (self._data_dir / "test").mkdir(exist_ok=True, parents=True)
+        (self._index_dir / "train").mkdir(exist_ok=True, parents=True)
+        (self._index_dir / "test").mkdir(exist_ok=True, parents=True)
         for i, fpath in enumerate((self._data_dir / "wavs").iterdir()):
             if i < train_length:
-                shutil.move(str(fpath), str(self._data_dir / "train" / fpath.name))
+                shutil.move(str(fpath), str(self._index_dir / "train" / fpath.name))
             else:
-                shutil.move(str(fpath), str(self._data_dir / "test" / fpath.name))
+                shutil.move(str(fpath), str(self._index_dir / "test" / fpath.name))
         shutil.rmtree(str(self._data_dir / "wavs"))
 
 
     def _get_or_load_index(self, part):
-        index_path = self._data_dir / f"{part}_index.json"
+        index_path = self._index_dir / f"{part}_index.json"
         if index_path.exists():
             with index_path.open() as f:
                 index = json.load(f)

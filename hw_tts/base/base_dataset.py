@@ -157,13 +157,15 @@ class BaseDataset(Dataset):
 
     @staticmethod
     def get_durations(index):
-        file_path = f"{ROOT_PATH}/data/datasets/alignments/{index}.npy"
+        # file_path = f"{ROOT_PATH}/data/datasets/alignments/{index}.npy"
+        file_path = f"/kaggle/input/ljspeech-extended/LJSpeech/alignments/{index}.npy"
         durations = np.load(file_path)
         return durations
 
     @staticmethod
     def get_text(index):
-        file_path = f"{ROOT_PATH}/data/train.txt"
+        # file_path = f"{ROOT_PATH}/data/train.txt"
+        file_path = f"/kaggle/input/ljspeech-extended/LJSpeech/train.txt"
         with open(file_path, "r", encoding="utf-8") as f:
             text = f.readlines()[index]
         return text

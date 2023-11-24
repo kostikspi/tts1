@@ -62,7 +62,9 @@
         {
           "type": "LJspeechDataset",
           "args": {
-            "part": "train"
+            "part": "train",
+            "data_dir": "/kaggle/input/ljspeech-extended/LJSpeech",
+            "index_dir": "/kaggle/working/"
           }
         }
       ]
@@ -74,7 +76,8 @@
         {
           "type": "LJspeechDataset",
           "args": {
-            "part": "test"
+            "part": "test",
+            "index_dir": "/kaggle/working/"
           }
         }
       ]
