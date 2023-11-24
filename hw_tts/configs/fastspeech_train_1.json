@@ -1,0 +1,117 @@
+{
+  "name": "fast_test",
+  "n_gpu": 1,
+  "preprocessing": {
+    "sr": 16000,
+    "spectrogram": {
+      "type": "MelSpectrogram",
+      "args": {
+        "n_mels": 80
+      }
+    },
+    "log_spec": true
+  },
+  "augmentations": {
+    "wave": [],
+    "spectrogram": []
+  },
+  "arch": {
+    "type": "FastSpeech",
+    "args": {
+      "model_config": {
+        "num_mels": 80,
+        "vocab_size": 300,
+        "max_seq_len": 3000,
+        "encoder_dim": 256,
+        "encoder_n_layer": 4,
+        "encoder_head": 2,
+        "encoder_conv1d_filter_size": 1024,
+        "decoder_dim": 256,
+        "decoder_n_layer": 4,
+        "decoder_head": 2,
+        "decoder_conv1d_filter_size": 1024,
+        "fft_conv1d_kernel": [
+          9,
+          1
+        ],
+        "fft_conv1d_padding": [
+          4,
+          0
+        ],
+        "duration_predictor_filter_size": 256,
+        "duration_predictor_kernel_size": 3,
+        "dropout": 0.1,
+        "pitch_predictor_filter_size": 256,
+        "pitch_predictor_kernel_size": 3,
+        "PAD": 0,
+        "UNK": 1,
+        "BOS": 2,
+        "EOS": 3,
+        "PAD_WORD": "<blank>",
+        "UNK_WORD": "<unk>",
+        "BOS_WORD": "<s>",
+        "EOS_WORD": "</s>"
+      }
+    }
+  },
+  "data": {
+    "train": {
+      "batch_size": 12,
+      "num_workers": 0,
+      "datasets": [
+        {
+          "type": "LJspeechDataset",
+          "args": {
+            "part": "train"
+          }
+        }
+      ]
+    },
+    "test": {
+      "batch_size": 12,
+      "num_workers": 0,
+      "datasets": [
+        {
+          "type": "LJspeechDataset",
+          "args": {
+            "part": "test"
+          }
+        }
+      ]
+    }
+  },
+  "metrics": [
+  ],
+  "optimizer": {
+    "type": "AdamW",
+    "args": {
+      "lr": 1e-2
+    }
+  },
+  "loss": {
+    "type": "FastSpeechLoss",
+    "args": {}
+  },
+  "lr_scheduler": {
+    "type": "OneCycleLR",
+    "args": {
+      "steps_per_epoch": 100,
+      "epochs": 200,
+      "anneal_strategy": "cos",
+      "max_lr": 1e-2,
+      "pct_start": 0.2
+    }
+  },
+  "trainer": {
+    "epochs": 200,
+    "save_dir": "saved/",
+    "save_period": 5,
+    "verbosity": 2,
+    "monitor": "min val_loss",
+    "early_stop": 100,
+    "visualize": "wandb",
+    "wandb_project": "tts_project",
+    "len_epoch": 100,
+    "grad_norm_clip": 10
+  }
+}

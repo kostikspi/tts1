@@ -1,0 +1,3 @@
+2023-11-23 02:40:00,643 - hw_asr.base.base_dataset - INFO - 0 (0.0%) records are longer then 13 seconds. Excluding them.
+2023-11-23 02:40:00,727 - hw_asr.base.base_dataset - INFO - 8518 (77.2%) records are longer then 140 characters. Excluding them.
+2023-11-23 02:40:00,730 - hw_asr.base.base_dataset - INFO - Filtered 8518(77.2%) records  from dataset
