@@ -26,7 +26,7 @@ class LJspeechDataset(BaseDataset):
         if index_dir is None:
             index_dir = data_dir
         self._index_dir = Path(index_dir)
-        self._data_dir = data_dir
+        self._data_dir = Path(data_dir)
         index = self._get_or_load_index(part)
 
         super().__init__(index, *args, **kwargs)
